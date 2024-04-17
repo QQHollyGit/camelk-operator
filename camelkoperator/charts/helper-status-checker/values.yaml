@@ -1,14 +1,14 @@
-helper-status-checker:
-  enabled: true 
-  approver: true
+    helper-status-checker:
+      enabled: true 
+      approver: true
 
- # use the value of the currentCSV (packagemanifest) but WITHOUT the version !!
- operatorName: red-hat-camel-k 
+      # use the value of the currentCSV (packagemanifest) but WITHOUT the version !!
+      operatorName: red-hat-camel-k 
 
- # where operator is installed
- namespace:
-   name: openshift-camelk
+      # where operator is installed
+      namespace:
+        name: openshift-camelk
 
- serviceAccount: 
-   create: true
-   name: "sa-camelk" 
+      serviceAccount: 
+        create: true
+        name: "sa-camelk" 
