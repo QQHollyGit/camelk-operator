@@ -1,0 +1,68 @@
+---
+# Using sub-chart helper-operator
+helper-operator:
+  operators:
+    camelk-operator:
+      # -- Enabled yes/no
+      # @default -- false
+      enabled: true
+      # -- Syncwave for the operator deployment
+      # @default -- 0
+      syncwave: '0'
+      namespace:
+        # -- The Namespace the Operator should be installed in.
+        # The compliance operator should be deployed into **openshift-compliance** Namepsace
+        # that must be created.
+        name: openshift-camelk
+        # -- Description of the namespace.
+        # @default -- ""
+        create: true
+      subscription:
+        # -- Channel of the Subscription
+        # @default -- stable
+        channel: 1.10.x
+        # -- Update behavior of the Operator. Manual/Automatic
+        # @default -- Automatic
+        approval: Manual
+        # -- Name of the Operator
+        # The name for the compliance operator is **compliance-operator**
+        # @default -- "empty"
+        operatorName: red-hat-camel-k
+        # -- Source of the Operator
+        # @default -- redhat-operators
+        source: redhat-operators
+        # -- Namespace of the source
+        # @default -- openshift-marketplace
+        sourceNamespace: openshift-marketplace
+      operatorgroup:
+        # -- Create an Operatorgroup object
+        # @default -- false
+        create: true
+        # -- Monitor own Namespace. For some Operators no `targetNamespaces` must be defined
+        # @default -- false
+        notownnamespace: true
+
+# Using sub-chart helper-status-checker
+helper-status-checker:
+  # -- Enable status checker
+  # @default -- false
+  enabled: true
+  approver: true
+
+  checks:
+
+      # -- Define the name of the operator that shall be verified.
+      # Use the value of the currentCSV (packagemanifest) but WITHOUT the version !!
+      # For the compliance operator the name should be "**compliance-operator**"
+      # @default -- ""
+    - operatorName: red-hat-camel-k
+      # -- Define where the operator is installed
+      # For the compliance operator this should be "**openshift-compliance**"
+      # @default -- ""
+      namespace:
+        name: openshift-camelk
+      syncwave: 3
+
+      # -- Set the values of the ServiceAccount that will execute the status checker Job.
+      serviceAccount:
+        name: "sa-camelk"
